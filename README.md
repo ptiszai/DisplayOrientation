@@ -6,12 +6,10 @@ Instantly flip screen orientation horizontal / vertical with a  GUI command.
 Because switching between landscape and portrait mode using Display settings on windows takes too many clicks.
 Works with multiple monitors and all display orientation modes (landscape, landscape inverted, portrait, portrait inverted).
 Preview oroginal Windows 11 Desktop -> System -> Display
+![preview1](displayorintationWin11.png)<br>
 
-![preview2](https://support.content.office.net/en-us/media/96e92630-bbfe-4292-bbfc-fbb4a4908c8e.png)
-![](displayorintationWin11.png)<br>
-
-Image of application:
-![](displayorintationMain.png)<br>
+Image of application:<br>
+![preview2](displayorintationMain.png)<br>
 
 ### needs 2 arguments! :
 
