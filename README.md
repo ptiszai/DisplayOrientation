@@ -2,10 +2,10 @@
 
 Windows .NET Framework 4.8
 
-Instantly flip screen orientation horizontal / vertical with a  GUI command. 
-Because switching between landscape and portrait mode using Display settings on windows takes too many clicks.
-Works with multiple monitors and all display orientation modes (landscape, landscape inverted, portrait, portrait inverted).
-Preview oroginal Windows 11 Desktop -> System -> Display
+Instantly flip screen orientation horizontal / vertical with a  GUI command. <br>
+Because switching between landscape and portrait mode using Display settings on windows takes too many clicks.<br>
+Works with multiple monitors and all display orientation modes (landscape, landscape inverted, portrait, portrait inverted).<br>
+Preview oroginal Windows 11 Desktop -> System -> Display<br>
 ![preview1](displayorintationWin11.png)<br>
 
 Image of application:<br>
