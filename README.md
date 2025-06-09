@@ -30,6 +30,10 @@ F2 key : back to default landscape
 
 .\DisplayOrientation\install\Output\DisplayOrientation 1.0.1.0.exe
 
+### .NET Framework 4.8 redistributable :
+
+ [Download .NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)<br>
+
 ### notes :
 
 - doesn't need to be run as admin
