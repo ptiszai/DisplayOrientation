@@ -11,7 +11,7 @@ Preview oroginal Windows 11 Desktop -> System -> Display<br>
 Image of application:<br>
 ![preview2](displayorintationMain.png)<br>
 
-### needs 2 arguments! :
+### needs 4 arguments :
 
 RotateDisplay.cs:
 Running(uint deviceID_a, uint rotateMode_a, ref int width_a, ref int height_a) { ... };
@@ -25,6 +25,10 @@ Running(uint deviceID_a, uint rotateMode_a, ref int width_a, ref int height_a) {
 Press :
 ESC key : exit
 F2 key : back to default landscape
+
+### install binary :
+
+.\DisplayOrientation\install\Output\DisplayOrientation 1.0.1.0.exe
 
 ### notes :
 
