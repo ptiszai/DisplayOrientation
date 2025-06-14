@@ -5,6 +5,7 @@ Windows .NET Framework 4.8
 Instantly flip screen orientation horizontal / vertical with a  GUI command. <br>
 Because switching between landscape and portrait mode using Display settings on windows takes too many clicks.<br>
 Works with multiple monitors and all display orientation modes (landscape, landscape inverted, portrait, portrait inverted).<br>
+
 Preview oroginal Windows 11 Desktop -> System -> Display<br>
 ![preview1](displayorintationWin11.png)<br>
 
@@ -23,16 +24,16 @@ Running(uint deviceID_a, uint rotateMode_a, ref int width_a, ref int height_a) {
 ### hotkeys :
 
 Press :
-ESC key : exit
-F2 key : back to default landscape
+ESC key : exit<br>
+F2 key : back to default landscape<br>
 
 ### install binary :
 
-.\DisplayOrientation\install\Output\DisplayOrientation 1.0.1.0.exe
+.\DisplayOrientation\install\Output\DisplayOrientation 1.0.1.0.exe<br>
 
 ### .NET Framework 4.8 redistributable :
 
- [Download .NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)<br>
+[Download .NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)<br>
 
 ### notes :
 

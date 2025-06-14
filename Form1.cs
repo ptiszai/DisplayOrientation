@@ -49,7 +49,7 @@ namespace DisplayOrientation
 
         private void landscapeRadioBtn_Click(object sender, EventArgs e)
         {
-            _result = RotateDisplay.Running(0, 0, ref width, ref height);
+            _result = RotateDisplay.Running(0, 0, true, false, ref width, ref height);
             result.Text = _result.ToString();
             width_value.Text = width.ToString();
             height_value.Text = height.ToString();
@@ -58,7 +58,7 @@ namespace DisplayOrientation
 
         private void portraitinvertedRadioBtn_Click(object sender, EventArgs e)
         {         
-            _result = RotateDisplay.Running(0, 90, ref width, ref height);
+            _result = RotateDisplay.Running(0, 90, true, false, ref width, ref height);
             result.Text = _result.ToString();
             width_value.Text = width.ToString();
             height_value.Text = height.ToString();
@@ -67,14 +67,14 @@ namespace DisplayOrientation
 
         private void landscapeinvertedRadioBtn_Click(object sender, EventArgs e)
         {
-            _result = RotateDisplay.Running(0, 180, ref width, ref height);
+            _result = RotateDisplay.Running(0, 180, true, false, ref width, ref height);
             result.Text = _result.ToString();
             return;
         }
 
         private void portraidradioBtn_Click(object sender, EventArgs e)
         {
-            _result = RotateDisplay.Running(0, 270, ref width, ref height);
+            _result = RotateDisplay.Running(0, 270, true, false, ref width, ref height);
             result.Text = _result.ToString();
             return;
         }
@@ -107,7 +107,7 @@ namespace DisplayOrientation
             else
             if (e.KeyCode == Keys.F2)
             {
-                _result = RotateDisplay.Running(0, 0, ref width, ref height);
+                _result = RotateDisplay.Running(0, 0, true, false, ref width, ref height);
                 result.Text = _result.ToString();
                 width_value.Text = width.ToString();
                 height_value.Text = height.ToString();

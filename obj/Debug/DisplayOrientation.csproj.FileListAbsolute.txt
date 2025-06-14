@@ -1,0 +1,11 @@
+C:\Users\HP\work\GitHub\DisplayOrientation\bin\Debug\DisplayOrientation.exe.config
+C:\Users\HP\work\GitHub\DisplayOrientation\bin\Debug\DisplayOrientation.exe
+C:\Users\HP\work\GitHub\DisplayOrientation\bin\Debug\DisplayOrientation.pdb
+C:\Users\HP\work\GitHub\DisplayOrientation\obj\Debug\DisplayOrientation.csproj.AssemblyReference.cache
+C:\Users\HP\work\GitHub\DisplayOrientation\obj\Debug\DisplayOrientation.Form1.resources
+C:\Users\HP\work\GitHub\DisplayOrientation\obj\Debug\DisplayOrientation.Properties.Resources.resources
+C:\Users\HP\work\GitHub\DisplayOrientation\obj\Debug\DisplayOrientation.csproj.GenerateResource.cache
+C:\Users\HP\work\GitHub\DisplayOrientation\obj\Debug\DisplayOrientation.csproj.CoreCompileInputs.cache
+C:\Users\HP\work\GitHub\DisplayOrientation\obj\Debug\DisplayOrientation.exe
+C:\Users\HP\work\GitHub\DisplayOrientation\obj\Debug\DisplayOrientation.pdb
+C:\Users\HP\work\GitHub\DisplayOrientation\obj\Debug\DisplayOrientation.exe.config

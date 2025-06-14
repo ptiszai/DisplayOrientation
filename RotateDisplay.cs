@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using static DisplayOrientation.RotateDisplay;
 
 
 // Running is only in windows 10-11
@@ -7,6 +9,62 @@ namespace DisplayOrientation
 {
     public static class RotateDisplay
     {
+        //https://learn.microsoft.com/en-us/windows/win32/gdi/enumeration-and-display-control
+        public static bool Running(uint deviceID_a, uint rotateMode_a, bool firstDisplay_a, bool secondDisplay, ref int width_a, ref int height_a)
+        {
+            uint deviceID = deviceID_a;
+            uint rotateMode = rotateMode_a;
+
+            DISPLAY_DEVICE _device = new DISPLAY_DEVICE();
+            DEVMODE _dm = new DEVMODE();
+            _device.cb = Marshal.SizeOf(_device);
+            uint DispNum = 0;
+            // get all display devices
+            while (NativeMethods.EnumDisplayDevices(null, DispNum, ref _device, 0))
+            {
+                //ZeroMemory(&dm, sizeof(DEVMODE));
+                _dm = new DEVMODE();
+                _dm.dmSize = (short)Marshal.SizeOf(_dm);
+                //dm.dmSize = sizeof(DEVMODE);
+                if (0 == NativeMethods.EnumDisplaySettings(_device.DeviceName, NativeMethods.ENUM_CURRENT_SETTINGS, ref _dm))
+                {
+                    return false;
+                   // OutputDebugString("Store default failed\n");
+                }
+               // int _temp = (int)(d.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop);
+               // var tt = d.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop;
+                if (((int)(_device.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) != 0) && firstDisplay_a)
+                { 
+                    DEVMODE DevMode;
+                    DEVMODE devMode = new DEVMODE();
+                    // ZeroMemory(&DevMode, sizeof(DevMode));
+                    // DevMode.dmSize = sizeof(DevMode);
+                    devMode.dmSize |= (short)Marshal.SizeOf(devMode);
+                    //DevMode.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL | DM_POSITION
+                    //            | DM_DISPLAYFREQUENCY | DM_DISPLAYFLAGS;
+                    DevMode.dmFields = DM.PelsWidth | DM.PelsHeight | DM.BitsPerPixel | DM.Position | DM.DisplayFrequency | DM.DisplayFlags;
+
+                    rotate(rotateMode_a, ref _dm);
+
+                    DISP_CHANGE iRet = NativeMethods.ChangeDisplaySettingsEx(_device.DeviceName,
+                                                    ref _dm, 
+                                                    IntPtr.Zero,
+                                                    DisplaySettingsFlags.CDS_UPDATEREGISTRY, 
+                                                    IntPtr.Zero);
+                    if (iRet != DISP_CHANGE.Successful)
+                    {
+                        return false;
+                    }
+                    width_a = _dm.dmPelsWidth;
+                    height_a = _dm.dmPelsHeight;
+                }
+                //_dm = new DEVMODE();                
+                DispNum++;
+            }
+
+            return true;
+        }
+
         public static bool Running(uint deviceID_a, uint rotateMode_a, ref int width_a, ref int height_a)
         {
             uint deviceID = deviceID_a;
@@ -82,7 +140,49 @@ namespace DisplayOrientation
             width_a = dm.dmPelsWidth;
             height_a = dm.dmPelsHeight;
             return true;
+        }
 
+        private static void rotate(uint rotateMode_a, ref DEVMODE dm_a) 
+        {
+            int _w = dm_a.dmPelsWidth;
+            int _h = dm_a.dmPelsHeight;
+            switch (rotateMode_a)
+            {
+                case 270:
+                    if (_w > _h)
+                    {
+                        dm_a.dmPelsHeight = _w;
+                        dm_a.dmPelsWidth = _h;
+                    }
+                    dm_a.dmDisplayOrientation = NativeMethods.DMDO_270;
+                    break;
+                case 180:
+                    if (_h > _w)
+                    {
+                        dm_a.dmPelsHeight = _w;
+                        dm_a.dmPelsWidth = _h;
+                    }
+                    dm_a.dmDisplayOrientation = NativeMethods.DMDO_180;
+                    break;
+                case 90:
+                    if (_w > _h)
+                    {
+                        dm_a.dmPelsHeight = _w;
+                        dm_a.dmPelsWidth = _h;
+                    }
+                    dm_a.dmDisplayOrientation = NativeMethods.DMDO_90;
+                    break;
+                case 0:
+                    if (_h > _w)
+                    {
+                        dm_a.dmPelsHeight = _w;
+                        dm_a.dmPelsWidth = _h;
+                    }
+                    dm_a.dmDisplayOrientation = NativeMethods.DMDO_DEFAULT;
+                    break;
+                default:
+                    break;
+            }
         }
 
         /*internal*/
@@ -284,5 +384,8 @@ namespace DisplayOrientation
             PanningHeight = 0x10000000,
             DisplayFixedOutput = 0x20000000
         }
+        //  DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL | DM_POSITION
+        //  | DM_DISPLAYFREQUENCY | DM_DISPLAYFLAGS;
+        //  PelsWidth | PelsHeight | BitsPerPixel | Position | DisplayFrequency | DisplayFlags
     }
 }
