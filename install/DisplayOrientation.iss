@@ -9,7 +9,7 @@
 
 #define AppName "DisplayOrientation"
 #define AppExeName "DisplayOrientation.exe"
-#define AppVersion "1.0.1.0"
+#define AppVersion "1.0.1.1"
 #define AppNameVersion "DisplayOrientation program" + AppVersion 
 ; #define ConfigDir "c:\Users\Public\cibusAddFoodsToDatabase"
 ; #define ConfigAssetsDir "c:\Users\Public\cibusAddFoodsToDatabase\Assets"

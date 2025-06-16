@@ -30,6 +30,8 @@
         {
             this.exitBtn = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.display2Chbx = new System.Windows.Forms.CheckBox();
+            this.display1Chbx = new System.Windows.Forms.CheckBox();
             this.result = new System.Windows.Forms.Label();
             this.portraidradioBtn = new System.Windows.Forms.RadioButton();
             this.landscapeinvertedRadioBtn = new System.Windows.Forms.RadioButton();
@@ -44,7 +46,7 @@
             // 
             // exitBtn
             // 
-            this.exitBtn.Location = new System.Drawing.Point(177, 213);
+            this.exitBtn.Location = new System.Drawing.Point(177, 284);
             this.exitBtn.Name = "exitBtn";
             this.exitBtn.Size = new System.Drawing.Size(75, 23);
             this.exitBtn.TabIndex = 0;
@@ -54,6 +56,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.display2Chbx);
+            this.groupBox1.Controls.Add(this.display1Chbx);
             this.groupBox1.Controls.Add(this.result);
             this.groupBox1.Controls.Add(this.portraidradioBtn);
             this.groupBox1.Controls.Add(this.landscapeinvertedRadioBtn);
@@ -66,10 +70,36 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.groupBox1.Location = new System.Drawing.Point(23, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(229, 165);
+            this.groupBox1.Size = new System.Drawing.Size(229, 251);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Orientation, width, height";
+            // 
+            // display2Chbx
+            // 
+            this.display2Chbx.AutoSize = true;
+            this.display2Chbx.Enabled = false;
+            this.display2Chbx.Location = new System.Drawing.Point(11, 192);
+            this.display2Chbx.Name = "display2Chbx";
+            this.display2Chbx.Size = new System.Drawing.Size(95, 20);
+            this.display2Chbx.TabIndex = 9;
+            this.display2Chbx.Text = "Display 2.";
+            this.display2Chbx.UseVisualStyleBackColor = true;
+            this.display2Chbx.Click += new System.EventHandler(this.display2Chbx_Click);
+            // 
+            // display1Chbx
+            // 
+            this.display1Chbx.AutoSize = true;
+            this.display1Chbx.Checked = true;
+            this.display1Chbx.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.display1Chbx.Enabled = false;
+            this.display1Chbx.Location = new System.Drawing.Point(11, 166);
+            this.display1Chbx.Name = "display1Chbx";
+            this.display1Chbx.Size = new System.Drawing.Size(95, 20);
+            this.display1Chbx.TabIndex = 8;
+            this.display1Chbx.Text = "Display 1.";
+            this.display1Chbx.UseVisualStyleBackColor = true;
+            this.display1Chbx.Click += new System.EventHandler(this.display1Chbx_Click);
             // 
             // result
             // 
@@ -168,7 +198,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 254);
+            this.ClientSize = new System.Drawing.Size(284, 319);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.exitBtn);
             this.KeyPreview = true;
@@ -199,6 +229,8 @@
         private System.Windows.Forms.RadioButton portraidradioBtn;
         private System.Windows.Forms.RadioButton landscapeinvertedRadioBtn;
         private System.Windows.Forms.Label result;
+        private System.Windows.Forms.CheckBox display1Chbx;
+        private System.Windows.Forms.CheckBox display2Chbx;
     }
 }
 

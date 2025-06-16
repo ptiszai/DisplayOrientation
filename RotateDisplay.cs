@@ -7,10 +7,33 @@ using static DisplayOrientation.RotateDisplay;
 // Running is only in windows 10-11
 namespace DisplayOrientation
 {
+    #region public functions
     public static class RotateDisplay
     {
-        //https://learn.microsoft.com/en-us/windows/win32/gdi/enumeration-and-display-control
-        public static bool Running(uint deviceID_a, uint rotateMode_a, bool firstDisplay_a, bool secondDisplay, ref int width_a, ref int height_a)
+        public static (bool, bool) IsDisplays()
+        {
+            bool firstDisplay = false;
+            bool secondDisplay = false;
+            DISPLAY_DEVICE _device = new DISPLAY_DEVICE();
+            DEVMODE _dm = new DEVMODE();
+            _device.cb = Marshal.SizeOf(_device);
+            uint DispNum = 1;
+
+            if (NativeMethods.EnumDisplayDevices(null, 0, ref _device, 0))
+            {
+                firstDisplay = true;                
+            }
+
+            if (NativeMethods.EnumDisplayDevices(null, 1, ref _device, 0))
+            {
+                secondDisplay = true;
+            }
+
+            return (firstDisplay, secondDisplay);
+        }
+
+        // https://learn.microsoft.com/en-us/windows/win32/gdi/enumeration-and-display-control
+        public static bool Running(uint deviceID_a, uint rotateMode_a, bool firstDisplay_a, bool secondDisplay_a, ref int width_a, ref int height_a)
         {
             uint deviceID = deviceID_a;
             uint rotateMode = rotateMode_a;
@@ -18,50 +41,76 @@ namespace DisplayOrientation
             DISPLAY_DEVICE _device = new DISPLAY_DEVICE();
             DEVMODE _dm = new DEVMODE();
             _device.cb = Marshal.SizeOf(_device);
-            uint DispNum = 0;
-            // get all display devices
-            while (NativeMethods.EnumDisplayDevices(null, DispNum, ref _device, 0))
-            {
-                //ZeroMemory(&dm, sizeof(DEVMODE));
-                _dm = new DEVMODE();
-                _dm.dmSize = (short)Marshal.SizeOf(_dm);
-                //dm.dmSize = sizeof(DEVMODE);
-                if (0 == NativeMethods.EnumDisplaySettings(_device.DeviceName, NativeMethods.ENUM_CURRENT_SETTINGS, ref _dm))
-                {
-                    return false;
-                   // OutputDebugString("Store default failed\n");
-                }
-               // int _temp = (int)(d.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop);
-               // var tt = d.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop;
-                if (((int)(_device.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) != 0) && firstDisplay_a)
+
+            // get all display 1 devices
+            if (firstDisplay_a && NativeMethods.EnumDisplayDevices(null, 0, ref _device, 0))
+            {               
                 { 
-                    DEVMODE DevMode;
-                    DEVMODE devMode = new DEVMODE();
-                    // ZeroMemory(&DevMode, sizeof(DevMode));
-                    // DevMode.dmSize = sizeof(DevMode);
-                    devMode.dmSize |= (short)Marshal.SizeOf(devMode);
-                    //DevMode.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL | DM_POSITION
-                    //            | DM_DISPLAYFREQUENCY | DM_DISPLAYFLAGS;
-                    DevMode.dmFields = DM.PelsWidth | DM.PelsHeight | DM.BitsPerPixel | DM.Position | DM.DisplayFrequency | DM.DisplayFlags;
+                    _dm = new DEVMODE();
+                    _dm.dmSize = (short)Marshal.SizeOf(_dm);
 
-                    rotate(rotateMode_a, ref _dm);
-
-                    DISP_CHANGE iRet = NativeMethods.ChangeDisplaySettingsEx(_device.DeviceName,
-                                                    ref _dm, 
-                                                    IntPtr.Zero,
-                                                    DisplaySettingsFlags.CDS_UPDATEREGISTRY, 
-                                                    IntPtr.Zero);
-                    if (iRet != DISP_CHANGE.Successful)
+                    if (0 == NativeMethods.EnumDisplaySettings(_device.DeviceName, NativeMethods.ENUM_CURRENT_SETTINGS, ref _dm))
                     {
                         return false;
                     }
-                    width_a = _dm.dmPelsWidth;
-                    height_a = _dm.dmPelsHeight;
-                }
-                //_dm = new DEVMODE();                
-                DispNum++;
-            }
 
+                    if (((int)(_device.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) != 0))
+                    {
+                        DEVMODE DevMode;
+                        DEVMODE devMode = new DEVMODE();
+
+                        devMode.dmSize |= (short)Marshal.SizeOf(devMode);
+                        rotate(rotateMode_a, ref _dm);
+
+                        DISP_CHANGE iRet = NativeMethods.ChangeDisplaySettingsEx(_device.DeviceName,
+                                                        ref _dm,
+                                                        IntPtr.Zero,
+                                                        DisplaySettingsFlags.CDS_UPDATEREGISTRY,
+                                                        IntPtr.Zero);
+                        if (iRet != DISP_CHANGE.Successful)
+                        {
+                            return false;
+                        }
+                        width_a = _dm.dmPelsWidth;
+                        height_a = _dm.dmPelsHeight;
+                    }
+                }
+            }  //first  NativeMethods.EnumDisplayDevices
+            // get all display 2 devices
+            if (secondDisplay_a && NativeMethods.EnumDisplayDevices(null, 1, ref _device, 0))
+            {
+               // if (firstDisplay_a)
+                {
+                    _dm = new DEVMODE();
+                    _dm.dmSize = (short)Marshal.SizeOf(_dm);
+
+                    if (0 == NativeMethods.EnumDisplaySettings(_device.DeviceName, NativeMethods.ENUM_CURRENT_SETTINGS, ref _dm))
+                    {
+                        return false;
+                    }
+
+                    if (((int)(_device.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) != 0))
+                    {
+                        DEVMODE DevMode;
+                        DEVMODE devMode = new DEVMODE();
+
+                        devMode.dmSize |= (short)Marshal.SizeOf(devMode);
+                        rotate(rotateMode_a, ref _dm);
+
+                        DISP_CHANGE iRet = NativeMethods.ChangeDisplaySettingsEx(_device.DeviceName,
+                                                        ref _dm,
+                                                        IntPtr.Zero,
+                                                        DisplaySettingsFlags.CDS_UPDATEREGISTRY,
+                                                        IntPtr.Zero);
+                        if (iRet != DISP_CHANGE.Successful)
+                        {
+                            return false;
+                        }
+                        width_a = _dm.dmPelsWidth;
+                        height_a = _dm.dmPelsHeight;
+                    }
+                } //second  NativeMethods.EnumDisplayDevices               
+            }
             return true;
         }
 
@@ -85,9 +134,7 @@ namespace DisplayOrientation
             {
                 int _w = dm.dmPelsWidth;
                 int _h = dm.dmPelsHeight;
-                //dm.dmPelsHeight = dm.dmPelsWidth;
-                //dm.dmPelsWidth = temp;
-                //  int temp = 0;
+              
                 switch (rotateMode)
                 {
                     case 270:
@@ -141,7 +188,8 @@ namespace DisplayOrientation
             height_a = dm.dmPelsHeight;
             return true;
         }
-
+        #endregion
+    #region private functions
         private static void rotate(uint rotateMode_a, ref DEVMODE dm_a) 
         {
             int _w = dm_a.dmPelsWidth;
@@ -184,8 +232,8 @@ namespace DisplayOrientation
                     break;
             }
         }
-
-        /*internal*/
+        #endregion
+    #region public variables 
         public static class NativeMethods
         {
             [DllImport("user32.dll")]
@@ -211,7 +259,7 @@ namespace DisplayOrientation
         }
 
         [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Ansi)]
-        /*internal*/ public struct DEVMODE
+        public struct DEVMODE
         {
             public const int CCHDEVICENAME = 32;
             public const int CCHFORMNAME = 32;
@@ -284,7 +332,7 @@ namespace DisplayOrientation
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-        /*internal*/ public struct DISPLAY_DEVICE
+        public struct DISPLAY_DEVICE
         {
             [MarshalAs(UnmanagedType.U4)]
             public int cb;
@@ -383,9 +431,7 @@ namespace DisplayOrientation
             PanningWidth = 0x8000000,
             PanningHeight = 0x10000000,
             DisplayFixedOutput = 0x20000000
-        }
-        //  DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL | DM_POSITION
-        //  | DM_DISPLAYFREQUENCY | DM_DISPLAYFLAGS;
-        //  PelsWidth | PelsHeight | BitsPerPixel | Position | DisplayFrequency | DisplayFlags
+        }            
     }
+    #endregion 
 }

@@ -1,13 +1,5 @@
 ﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DisplayOrientation
@@ -19,6 +11,8 @@ namespace DisplayOrientation
         private int width = 0;
         private int height = 0;
         private bool _result = false;
+        private bool display1 = false;
+        private bool display2 = false;
         #endregion
         #region public functions
         public Form1()
@@ -37,7 +31,20 @@ namespace DisplayOrientation
         private void Form1_Load(object sender, EventArgs e)
         {
             CenterToScreen();
+            var (_display1, _display2) = RotateDisplay.IsDisplays();
+            display1 = _display1;
+            display2 = _display2;
+            if (display1)
+            { 
+                display1Chbx.Enabled = true;
+                display1Chbx.Checked = true;               
+            }
+            if (display2)
+            {
+                display2Chbx.Enabled = true;              
+            }
             landscapeRadioBtn_Click(null, null);
+           
             thread1 = new Thread(executor);
             thread1.Start();
         }
@@ -49,7 +56,7 @@ namespace DisplayOrientation
 
         private void landscapeRadioBtn_Click(object sender, EventArgs e)
         {
-            _result = RotateDisplay.Running(0, 0, true, false, ref width, ref height);
+            _result = RotateDisplay.Running(0, 0, display1, display2, ref width, ref height);
             result.Text = _result.ToString();
             width_value.Text = width.ToString();
             height_value.Text = height.ToString();
@@ -58,7 +65,7 @@ namespace DisplayOrientation
 
         private void portraitinvertedRadioBtn_Click(object sender, EventArgs e)
         {         
-            _result = RotateDisplay.Running(0, 90, true, false, ref width, ref height);
+            _result = RotateDisplay.Running(0, 90, display1, display2, ref width, ref height);
             result.Text = _result.ToString();
             width_value.Text = width.ToString();
             height_value.Text = height.ToString();
@@ -67,14 +74,14 @@ namespace DisplayOrientation
 
         private void landscapeinvertedRadioBtn_Click(object sender, EventArgs e)
         {
-            _result = RotateDisplay.Running(0, 180, true, false, ref width, ref height);
+            _result = RotateDisplay.Running(0, 180, display1, display2, ref width, ref height);
             result.Text = _result.ToString();
             return;
         }
 
         private void portraidradioBtn_Click(object sender, EventArgs e)
         {
-            _result = RotateDisplay.Running(0, 270, true, false, ref width, ref height);
+            _result = RotateDisplay.Running(0, 270, display1, display2, ref width, ref height);
             result.Text = _result.ToString();
             return;
         }
@@ -85,8 +92,7 @@ namespace DisplayOrientation
             {
                 Thread.Sleep(1000);
             }
-        }
-        #endregion
+        }        
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -107,7 +113,7 @@ namespace DisplayOrientation
             else
             if (e.KeyCode == Keys.F2)
             {
-                _result = RotateDisplay.Running(0, 0, true, false, ref width, ref height);
+                _result = RotateDisplay.Running(0, 0, display1, display2, ref width, ref height);
                 result.Text = _result.ToString();
                 width_value.Text = width.ToString();
                 height_value.Text = height.ToString();
@@ -115,5 +121,18 @@ namespace DisplayOrientation
             }
             e.SuppressKeyPress = true;
         }
+
+        private void display1Chbx_Click(object sender, EventArgs e)
+        {
+            display1 = display1Chbx.Checked;
+            landscapeRadioBtn_Click(null, null);
+        }
+
+        private void display2Chbx_Click(object sender, EventArgs e)
+        {
+            display2 = display2Chbx.Checked;
+            landscapeRadioBtn_Click(null, null);
+        }
+        #endregion
     }
 }
