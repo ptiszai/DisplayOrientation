@@ -44,14 +44,14 @@ F2 key : back to default landscape<br>
 ### photos :
 
  0 degrees<br>
- ![photo](4.png)<br>
+ ![photo1](4.png)<br>
 
  90 degrees<br>
- ![photo](3.png)<br>
+ ![photo2](3.png)<br>
 
  180 degrees<br>
- ![photo](2.png)<br>
+ ![photo3](2.png)<br>
 
  270 degrees<br>
- ![photo](1.png)<br>
+ ![photo4](1.png)<br>
 
