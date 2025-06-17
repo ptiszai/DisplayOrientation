@@ -39,4 +39,19 @@ F2 key : back to default landscape<br>
 
 - doesn't need to be run as admin
 - rotation can only be set to 4 available values (0, 90, 180, 270), any other value won't work. 
-- can't set screen xy position in relation to other screens as possible with Display settings menu. 
+- can't set screen xy position in relation to other screens as possible with Display settings menu.
+
+### photos :
+
+ 0 degrees<br>
+ ![photo](4.png)<br>
+
+ 90 degrees<br>
+ ![photo](3.png)<br>
+
+ 180 degrees<br>
+ ![photo](2.png)<br>
+
+ 270 degrees<br>
+ ![photo](1.png)<br>
+
